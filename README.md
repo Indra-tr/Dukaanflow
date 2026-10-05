@@ -7,6 +7,7 @@ A self-contained merchant dashboard prototype with a small Node.js API. It uses 
 Install Node.js 18 or newer, then from this folder run:
 
 ```sh
+npm install
 npm start
 ```
 
