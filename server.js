@@ -1,5 +1,5 @@
 const http = require('node:http');
-const fs = require('node:fs/promise');
+const fs = require('node:fs/promises');
 const path = require('node:path');
 
 const PORT = Number(process.env.PORT || 4173);
