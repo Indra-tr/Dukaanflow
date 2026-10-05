@@ -1,0 +1,104 @@
+{
+  "merchant": {
+    "name": "Sri Lakshmi Stores",
+    "owner": "Ravi Kumar",
+    "location": "Bengaluru",
+    "monthlySales": 380420,
+    "cashAvailable": 42500,
+    "customerReceivables": 11500,
+    "supplierDues": 18000,
+    "upcomingExpenses": 7000,
+    "operatingBuffer": 9000,
+    "salesChangePercent": 8.4,
+    "customerCount": 18,
+    "supplierCount": 5,
+    "productCount": 50,
+    "upiIncome": 198000,
+    "cashIncome": 112000,
+    "creditCollected": 70420,
+    "rentExpense": 18000,
+    "staffExpense": 12000,
+    "utilityExpense": 3200,
+    "miscExpense": 4800
+  },
+  "cashflowTimeline": [
+    { "week": "Week 1", "income": 91200, "expenses": 34000 },
+    { "week": "Week 2", "income": 87400, "expenses": 29500 },
+    { "week": "Week 3", "income": 103600, "expenses": 41200 },
+    { "week": "Week 4", "income": 98220, "expenses": 38000 }
+  ],
+  "products": [
+    { "id": "milk-500", "name": "Nandini Milk 500ml", "category": "Dairy", "emoji": "🥛", "stock": 12, "dailySales": 18, "unitCost": 26, "sellingPrice": 30, "supplier": "Kaveri Distributors", "suggestedOrderQty": 40, "status": "reorder", "monthlyRevenue": 16200 },
+    { "id": "curd-400", "name": "Nandini Curd 400g", "category": "Dairy", "emoji": "🥣", "stock": 8, "dailySales": 14, "unitCost": 38, "sellingPrice": 44, "supplier": "Kaveri Distributors", "suggestedOrderQty": 35, "status": "reorder", "monthlyRevenue": 18480 },
+    { "id": "lays-classic", "name": "Lays Classic 26g", "category": "Snacks", "emoji": "🍟", "stock": 14, "dailySales": 11, "unitCost": 10, "sellingPrice": 20, "supplier": "City Wholesale", "suggestedOrderQty": 24, "status": "reorder", "monthlyRevenue": 6600 },
+    { "id": "kurkure", "name": "Kurkure Masala 90g", "category": "Snacks", "emoji": "🌶️", "stock": 22, "dailySales": 9, "unitCost": 18, "sellingPrice": 30, "supplier": "City Wholesale", "suggestedOrderQty": 20, "status": "reorder", "monthlyRevenue": 8100 },
+    { "id": "clinic-plus", "name": "Clinic Plus Shampoo", "category": "Personal Care", "emoji": "🧴", "stock": 42, "dailySales": 0.8, "unitCost": 78, "sellingPrice": 99, "supplier": "Metro Cash & Carry", "suggestedOrderQty": 0, "status": "slow", "monthlyRevenue": 2376 },
+    { "id": "dove-soap", "name": "Dove Soap 100g", "category": "Personal Care", "emoji": "🧼", "stock": 38, "dailySales": 1.2, "unitCost": 42, "sellingPrice": 58, "supplier": "Metro Cash & Carry", "suggestedOrderQty": 0, "status": "slow", "monthlyRevenue": 2088 },
+    { "id": "good-day", "name": "Britannia Good Day", "category": "Biscuits", "emoji": "🍪", "stock": 120, "dailySales": 8, "unitCost": 10, "sellingPrice": 20, "supplier": "City Wholesale", "suggestedOrderQty": 0, "status": "healthy", "monthlyRevenue": 4800 },
+    { "id": "parle-g", "name": "Parle-G 250g", "category": "Biscuits", "emoji": "🫙", "stock": 95, "dailySales": 12, "unitCost": 8, "sellingPrice": 15, "supplier": "City Wholesale", "suggestedOrderQty": 0, "status": "healthy", "monthlyRevenue": 5400 },
+    { "id": "basmati-1kg", "name": "India Gate Basmati 1kg", "category": "Staples", "emoji": "🍚", "stock": 26, "dailySales": 2.3, "unitCost": 112, "sellingPrice": 145, "supplier": "Kaveri Distributors", "suggestedOrderQty": 0, "status": "healthy", "monthlyRevenue": 10005 },
+    { "id": "toor-dal", "name": "Toor Dal 1kg", "category": "Staples", "emoji": "🫘", "stock": 18, "dailySales": 4.5, "unitCost": 95, "sellingPrice": 120, "supplier": "Kaveri Distributors", "suggestedOrderQty": 15, "status": "reorder", "monthlyRevenue": 16200 },
+    { "id": "sunflower-oil", "name": "Sunflower Oil 1L", "category": "Staples", "emoji": "🫙", "stock": 31, "dailySales": 3.1, "unitCost": 130, "sellingPrice": 158, "supplier": "Kaveri Distributors", "suggestedOrderQty": 0, "status": "healthy", "monthlyRevenue": 14694 },
+    { "id": "colgate-150", "name": "Colgate Strong 150g", "category": "Personal Care", "emoji": "🪥", "stock": 55, "dailySales": 1.5, "unitCost": 55, "sellingPrice": 75, "supplier": "Metro Cash & Carry", "suggestedOrderQty": 0, "status": "healthy", "monthlyRevenue": 3375 }
+  ],
+  "customers": [
+    { "id": "ramesh-m", "name": "Ramesh M.", "initials": "RM", "balance": 1800, "daysOverdue": 18, "usualPayDays": 12, "totalPurchases": 42000, "language": "kn", "phone": "98XXXXXXXX" },
+    { "id": "suresh-p", "name": "Suresh P.", "initials": "SP", "balance": 950, "daysOverdue": 14, "usualPayDays": 10, "totalPurchases": 28500, "language": "hi", "phone": "97XXXXXXXX" },
+    { "id": "lakshmi-k", "name": "Lakshmi K.", "initials": "LK", "balance": 700, "daysOverdue": 11, "usualPayDays": 9, "totalPurchases": 19200, "language": "kn", "phone": "96XXXXXXXX" },
+    { "id": "anita-r", "name": "Anita R.", "initials": "AR", "balance": 500, "daysOverdue": 9, "usualPayDays": 7, "totalPurchases": 15600, "language": "en", "phone": "95XXXXXXXX" },
+    { "id": "mohan-s", "name": "Mohan S.", "initials": "MS", "balance": 350, "daysOverdue": 8, "usualPayDays": 7, "totalPurchases": 11400, "language": "hi", "phone": "94XXXXXXXX" },
+    { "id": "priya-n", "name": "Priya N.", "initials": "PN", "balance": 620, "daysOverdue": 6, "usualPayDays": 8, "totalPurchases": 22000, "language": "kn", "phone": "93XXXXXXXX" },
+    { "id": "venkat-r", "name": "Venkat R.", "initials": "VR", "balance": 1100, "daysOverdue": 21, "usualPayDays": 14, "totalPurchases": 38000, "language": "kn", "phone": "92XXXXXXXX" },
+    { "id": "deepa-s", "name": "Deepa S.", "initials": "DS", "balance": 280, "daysOverdue": 5, "usualPayDays": 7, "totalPurchases": 9800, "language": "en", "phone": "91XXXXXXXX" }
+  ],
+  "suppliers": [
+    {
+      "id": "kaveri", "name": "Kaveri Distributors", "contact": "Sunil Rao", "phone": "98XXXXXXXX",
+      "amountDue": 11000, "dueDays": 3, "lastOrderDate": "2026-09-28",
+      "products": ["milk-500", "curd-400", "basmati-1kg", "toor-dal", "sunflower-oil"],
+      "avgDeliveryDays": 1, "rating": 4.5, "notes": "Reliable. Delivers next morning."
+    },
+    {
+      "id": "city-wholesale", "name": "City Wholesale", "contact": "Ramesh Gupta", "phone": "97XXXXXXXX",
+      "amountDue": 4500, "dueDays": 7, "lastOrderDate": "2026-09-25",
+      "products": ["lays-classic", "kurkure", "good-day", "parle-g"],
+      "avgDeliveryDays": 2, "rating": 4.2, "notes": "Good prices on snacks and biscuits."
+    },
+    {
+      "id": "metro", "name": "Metro Cash & Carry", "contact": "Self-pickup", "phone": null,
+      "amountDue": 2500, "dueDays": 14, "lastOrderDate": "2026-09-20",
+      "products": ["clinic-plus", "dove-soap", "colgate-150"],
+      "avgDeliveryDays": 0, "rating": 4.0, "notes": "Self-pickup. Good for personal care."
+    },
+    {
+      "id": "supplier-b", "name": "Supplier B (Dairy Direct)", "contact": "Kiran Nair", "phone": "96XXXXXXXX",
+      "amountDue": 0, "dueDays": null, "lastOrderDate": null,
+      "products": ["curd-400"],
+      "avgDeliveryDays": 1, "rating": 3.8, "notes": "Cheaper on curd. Not yet a regular supplier."
+    },
+    {
+      "id": "fresh-farms", "name": "Fresh Farms Co.", "contact": "Anand Kumar", "phone": "95XXXXXXXX",
+      "amountDue": 0, "dueDays": null, "lastOrderDate": null,
+      "products": ["toor-dal", "sunflower-oil"],
+      "avgDeliveryDays": 2, "rating": 4.1, "notes": "Competitive on staples. Minimum order ₹2,000."
+    }
+  ],
+  "marginLeaks": [
+    { "productId": "curd-400", "productName": "Nandini Curd 400g", "emoji": "🥣", "currentSupplier": "Kaveri Distributors", "currentPrice": 38, "betterSupplier": "Supplier B (Dairy Direct)", "betterPrice": 35, "monthlyUnits": 420, "monthlySaving": 1260 },
+    { "productId": "toor-dal", "productName": "Toor Dal 1kg", "emoji": "🫘", "currentSupplier": "Kaveri Distributors", "currentPrice": 95, "betterSupplier": "Fresh Farms Co.", "betterPrice": 88, "monthlyUnits": 135, "monthlySaving": 945 },
+    { "productId": "sunflower-oil", "productName": "Sunflower Oil 1L", "emoji": "🫙", "currentSupplier": "Kaveri Distributors", "currentPrice": 130, "betterSupplier": "Fresh Farms Co.", "betterPrice": 124, "monthlyUnits": 93, "monthlySaving": 558 },
+    { "productId": "lays-classic", "productName": "Lays Classic 26g", "emoji": "🍟", "currentSupplier": "City Wholesale", "currentPrice": 10, "betterSupplier": "Metro Cash & Carry", "betterPrice": 9, "monthlyUnits": 330, "monthlySaving": 330 },
+    { "productId": "good-day", "productName": "Britannia Good Day", "emoji": "🍪", "currentSupplier": "City Wholesale", "currentPrice": 10, "betterSupplier": "Metro Cash & Carry", "betterPrice": 9, "monthlyUnits": 240, "monthlySaving": 240 },
+    { "productId": "clinic-plus", "productName": "Clinic Plus Shampoo", "emoji": "🧴", "currentSupplier": "Metro Cash & Carry", "currentPrice": 78, "betterSupplier": "City Wholesale", "betterPrice": 74, "monthlyUnits": 24, "monthlySaving": 96 },
+    { "productId": "dove-soap", "productName": "Dove Soap 100g", "emoji": "🧼", "currentSupplier": "Metro Cash & Carry", "currentPrice": 42, "betterSupplier": "City Wholesale", "betterPrice": 40, "monthlyUnits": 36, "monthlySaving": 72 },
+    { "productId": "colgate-150", "productName": "Colgate Strong 150g", "emoji": "🪥", "currentSupplier": "Metro Cash & Carry", "currentPrice": 55, "betterSupplier": "City Wholesale", "betterPrice": 53, "monthlyUnits": 45, "monthlySaving": 90 }
+  ],
+  "supplierComparison": {
+    "product": "Nandini curd",
+    "units": 40,
+    "usualSupplier": { "name": "Kaveri Distributors", "unitPrice": 38 },
+    "alternativeSupplier": { "name": "Supplier B", "unitPrice": 35 }
+  },
+  "orders": [],
+  "reminderDrafts": []
+}

@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>DukaanFlow — your shop, in flow</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--paper:#f6f6f1;--white:#fff;--ink:#17261f;--muted:#7f8981;--line:#e7e9e2;--green:#196c48;--green2:#e8f3eb;--lime:#c8f36b;--orange:#ed9b51;--red:#cf6655;--shadow:0 8px 28px #2031270a}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:14px}button,input,select{font:inherit}button{cursor:pointer}
+.app{min-height:100vh;display:grid;grid-template-columns:236px 1fr}
+aside{background:#fff;border-right:1px solid var(--line);padding:25px 17px 20px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 9px 31px}.brand-mark{height:34px;width:34px;border-radius:11px;background:var(--green);display:grid;place-items:center;color:var(--lime)}.brand-name{font:800 17px Manrope,sans-serif;letter-spacing:-.7px}.brand-name span{color:var(--green)}
+.shop-switch{margin:0 3px 28px;padding:11px;border:1px solid var(--line);border-radius:11px;display:flex;align-items:center;gap:10px}.shop-icon{background:#f2ebe0;color:#856b45;width:32px;height:32px;display:grid;place-items:center;border-radius:9px;font-size:16px}.shop-copy{flex:1;min-width:0}.shop-copy b{display:block;font-size:12px}.shop-copy small{color:var(--muted);font-size:10px}
+.nav-label{font:500 10px 'DM Mono',monospace;letter-spacing:1px;color:#a2aaa2;padding:0 12px 10px}.nav{display:grid;gap:4px}.nav button{border:0;background:transparent;color:#68746c;text-align:left;border-radius:9px;padding:10px 12px;display:flex;align-items:center;gap:12px;font-size:12px;transition:.16s}.nav button:hover{background:#f6f7f3}.nav button.active{background:var(--green2);color:var(--green);font-weight:700}.nav-icon{width:16px;text-align:center;font-size:16px}.nav-badge{font:11px 'DM Mono',monospace;margin-left:auto;color:var(--muted)}
+.side-bottom{margin-top:auto}.sync{margin:0 5px 16px;padding:11px;background:#f8f9f6;border-radius:10px;display:flex;gap:9px;align-items:center}.pulse{height:7px;width:7px;background:#54a477;border-radius:50%;box-shadow:0 0 0 3px #54a47722}.sync small{font-size:10px;color:var(--muted)}.profile{padding:14px 7px 0;border-top:1px solid var(--line);display:flex;align-items:center;gap:9px}.avatar{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;background:#ead9c8;color:#705a43;font-weight:700;font-size:11px}.profile b{font-size:11px;display:block}.profile small{font-size:10px;color:var(--muted)}
+main{min-width:0;padding:29px 42px 50px}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}.crumb{font-size:11px;color:var(--muted)}.crumb b{color:var(--ink);font-weight:600}.top-actions{display:flex;align-items:center;gap:17px}.today{font:11px 'DM Mono',monospace;color:var(--muted)}.icon-btn{position:relative;width:35px;height:35px;border:1px solid var(--line);border-radius:10px;background:#fff;color:#58645b}
+.notify-dot{position:absolute;top:7px;right:7px;height:5px;width:5px;background:var(--orange);border-radius:50%}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px}.eyebrow{font:10px 'DM Mono',monospace;letter-spacing:1.3px;color:var(--green);text-transform:uppercase;margin-bottom:8px}.page-head h1{margin:0;font:700 27px Manrope,sans-serif;letter-spacing:-1.1px}.page-head p{color:var(--muted);font-size:12px;margin:6px 0 0}.period{border:1px solid var(--line);background:#fff;padding:9px 12px;border-radius:9px;font-size:11px;color:#49544b}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:17px}.metric{background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px 17px;box-shadow:var(--shadow);min-height:104px}.metric-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:10px}.metric-symbol{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:#f2f5ef;color:var(--green);font-size:13px}.metric-value{font:700 22px Manrope,sans-serif;letter-spacing:-.6px;margin:10px 0 3px}.metric-foot{font-size:10px;color:var(--muted)}.up{color:var(--green)}.warn{color:#bf7540}
+.decision{border-radius:15px;overflow:hidden;background:var(--green);color:#fff;margin-bottom:17px;position:relative}.decision::after{content:"";position:absolute;width:260px;height:260px;border:1px solid #ffffff14;border-radius:50%;right:21%;top:-170px;box-shadow:0 0 0 29px #ffffff08,0 0 0 58px #ffffff05;pointer-events:none}.decision-inner{position:relative;z-index:1;padding:22px 24px 20px;display:grid;grid-template-columns:1.1fr 1fr;gap:28px}.decision-kicker{font:10px 'DM Mono',monospace;letter-spacing:1px;color:#c2dfc7;display:flex;align-items:center;gap:7px}.spark{color:var(--lime);font-size:15px}.decision h2{font:600 19px Manrope,sans-serif;letter-spacing:-.4px;margin:9px 0 6px}.decision p{font-size:11px;color:#d3e3d8;line-height:1.6;margin:0;max-width:430px}
+.ask{display:flex;gap:7px;margin-top:17px;max-width:470px}.ask input{min-width:0;flex:1;background:#ffffff12;border:1px solid #ffffff36;border-radius:8px;color:#fff;padding:10px 12px;font-size:11px;outline:none}.ask input::placeholder{color:#c2d4c7}.ask input:focus{border-color:#c8f36b}.ask button{border:0;background:var(--lime);color:#21351e;border-radius:8px;padding:0 13px;font-size:11px;font-weight:700}.ask button:disabled{opacity:.65;cursor:wait}.ask-response{display:none;margin-top:10px;padding:9px 11px;border-radius:8px;background:#ffffff13;color:#eff8ef;font-size:10px;line-height:1.55;max-width:470px}.ask-response.show{display:block}
+.decision-right{border-left:1px solid #ffffff25;padding-left:26px;display:flex;flex-direction:column;justify-content:center}.spend-label{font-size:10px;color:#bed5c3}.spend-amount{font:700 33px Manrope,sans-serif;letter-spacing:-1.3px;margin:2px 0}.spend-meta{font-size:10px;color:#cce0d0}.spend-track{height:5px;border-radius:4px;background:#ffffff29;margin:13px 0 8px;overflow:hidden}.spend-track span{display:block;background:var(--lime);height:100%;border-radius:4px;transition:width .4s}.breakdown{display:flex;justify-content:space-between;gap:12px;color:#cde0d1;font-size:9px}.breakdown b{font:10px 'DM Mono',monospace;color:#fff}.decision-note{font-size:9px;color:#c4d8c9;margin-top:13px;line-height:1.5}.decision-note button{border:0;padding:0;background:none;color:var(--lime);text-decoration:underline;font-size:inherit}
+.grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.86fr);gap:17px}.panel{background:#fff;border:1px solid var(--line);border-radius:13px;box-shadow:var(--shadow);min-width:0}.panel-head{display:flex;justify-content:space-between;align-items:center;padding:17px 18px 13px}.panel-title{font:700 13px Manrope,sans-serif;letter-spacing:-.2px}.panel-sub{font-size:10px;color:var(--muted);margin-top:3px}.text-btn{border:0;background:none;color:var(--green);font-size:10px;font-weight:600;cursor:pointer}
+.table-wrap{overflow-x:auto}.table{width:100%;border-collapse:collapse;white-space:nowrap}.table th{text-align:left;color:#9ba39c;font:9px 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.55px;padding:10px 18px;border-top:1px solid #f0f1ed;border-bottom:1px solid #f0f1ed}.table td{padding:11px 18px;border-bottom:1px solid #f2f3ef;font-size:10px}.table tr:last-child td{border-bottom:0}
+.product{display:flex;align-items:center;gap:9px}.prod-icon{width:28px;height:28px;border-radius:8px;background:#f6f4ed;display:grid;place-items:center;font-size:15px}.prod-name{font-weight:600;font-size:10px}.prod-cat{color:#9ba39c;font-size:9px;margin-top:2px}.stock-val{font:10px 'DM Mono',monospace}.stock-val.low{color:var(--red)}.stock-val.slow-c{color:#c4864f}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:5px 7px;border-radius:20px;font-size:9px;font-weight:600}.badge::before{content:"";height:5px;width:5px;border-radius:50%;background:currentColor}.badge.reorder{background:#fff0e9;color:#c9674e}.badge.healthy{background:#eaf4eb;color:#43855e}.badge.slowb{background:#fff4e5;color:#b67a3b}
+.buy{border:1px solid #dce9de;background:#f7fbf7;color:var(--green);padding:6px 9px;border-radius:7px;font-size:9px;font-weight:600}.buy:hover{background:var(--green);color:white}
+.right-stack{display:grid;gap:17px;align-content:start}.dues{padding-bottom:5px}.due-row{display:flex;align-items:center;padding:10px 17px;border-top:1px solid #f2f3ef;gap:10px}.due-avatar{height:31px;width:31px;border-radius:50%;display:grid;place-items:center;background:#f0e8dc;color:#876e4f;font-size:10px;font-weight:700}.due-info{flex:1}.due-info b{font-size:10px;display:block}.due-info small{font-size:9px;color:var(--muted)}.due-amount{text-align:right;font:11px 'DM Mono',monospace}.due-amount small{display:block;color:#b7855e;font:9px 'DM Sans',sans-serif;margin-top:3px}
+.activity-item{display:flex;gap:10px;padding:10px 17px;border-top:1px solid #f2f3ef}.activity-icon{height:27px;width:27px;border-radius:8px;display:grid;place-items:center;background:#eef5ed;color:var(--green);font-size:13px;flex:none}.activity-copy{font-size:10px;line-height:1.45;color:#4e5b51}.activity-copy b{color:var(--ink)}.activity-copy small{display:block;color:#9aa39b;font-size:9px;margin-top:3px}
+.footer-note{margin:14px 2px 0;display:flex;gap:7px;align-items:center;color:#98a098;font-size:9px}.footer-note span{font-size:12px;color:var(--green)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,15px);opacity:0;pointer-events:none;background:#20392a;color:#fff;padding:12px 17px;border-radius:10px;box-shadow:0 9px 30px #16281b30;font-size:11px;transition:.22s;z-index:5}.toast.show{opacity:1;transform:translate(-50%,0)}
+.modal-back{position:fixed;inset:0;background:#15241c66;display:none;place-items:center;padding:20px;z-index:4}.modal-back.open{display:grid}.modal{background:white;border-radius:15px;padding:22px;width:min(460px,100%);box-shadow:0 20px 70px #13251c40;max-height:90vh;overflow-y:auto}.modal h3{margin:0 0 4px;font:700 17px Manrope,sans-serif}.modal>p{color:var(--muted);font-size:11px;line-height:1.6;margin:6px 0 0}.modal-total{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding:12px 0;font-size:11px}.modal-total b{font:600 12px 'DM Mono',monospace}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}.modal-actions button{border:1px solid var(--line);background:white;border-radius:8px;padding:9px 12px;font-size:10px;cursor:pointer}.modal-actions .primary{background:var(--green);color:white;border-color:var(--green)}
+.view{display:none}.view.active{display:block}
+.cf-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-bottom:17px}
+.bar-chart{padding:18px 18px 10px}.bar-chart-title{font:9px 'DM Mono',monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}.bar-row-label{font:9px 'DM Mono',monospace;color:var(--muted);width:46px;flex:none;text-align:right}.bar-group{flex:1;display:flex;flex-direction:column;gap:3px}.bar-seg{height:10px;border-radius:3px;min-width:2px;transition:width .5s}.bar-seg.income{background:var(--green)}.bar-seg.expense{background:#f0c9a0}.bar-row-val{font:9px 'DM Mono',monospace;color:var(--muted);white-space:nowrap}
+.cf-breakdown{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:18px}.cf-item{background:#f8f9f6;border-radius:10px;padding:12px 14px}.cf-item-label{font-size:9px;color:var(--muted);margin-bottom:4px}.cf-item-val{font:600 15px Manrope,sans-serif}.cf-item-val.green{color:var(--green)}.cf-item-val.red{color:var(--red)}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-bottom:17px}
+.agent-card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px;box-shadow:var(--shadow)}.agent-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}.agent-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:17px;flex:none}.agent-title{font:700 12px Manrope,sans-serif}.agent-sub{font-size:9px;color:var(--muted);margin-top:2px}.agent-summary{font-size:11px;color:#3a4a3e;line-height:1.6;margin-bottom:10px}.agent-stat{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid #f2f3ef;font-size:10px;color:var(--muted)}.agent-stat b{font:600 11px 'DM Mono',monospace;color:var(--ink)}
+.agent-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.agent-tag{background:#f0f5f1;color:var(--green);border-radius:20px;padding:4px 9px;font-size:9px;font-weight:600}
+.planner-card{background:var(--green);color:#fff;border-radius:13px;padding:20px;box-shadow:var(--shadow);margin-bottom:17px}.planner-kicker{font:10px 'DM Mono',monospace;letter-spacing:1px;color:#c2dfc7;margin-bottom:8px}.planner-title{font:700 16px Manrope,sans-serif;margin-bottom:8px}.planner-rec{font-size:11px;color:#d3e3d8;line-height:1.6;margin-bottom:14px}.planner-actions{display:flex;flex-direction:column;gap:7px}.planner-action{background:#ffffff15;border-radius:8px;padding:9px 12px;font-size:10px;color:#e8f3eb;display:flex;align-items:center;gap:8px}.planner-action::before{content:"→";color:var(--lime)}
+.sup-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-bottom:17px}
+.sup-card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px;box-shadow:var(--shadow)}.sup-name{font:700 13px Manrope,sans-serif;margin-bottom:2px}.sup-meta{font-size:10px;color:var(--muted);margin-bottom:12px}.sup-row{display:flex;justify-content:space-between;padding:7px 0;border-top:1px solid #f2f3ef;font-size:10px;color:var(--muted)}.sup-row b{font:600 11px 'DM Mono',monospace;color:var(--ink)}.sup-due{color:var(--red)!important}.sup-ok{color:var(--green)!important}
+.margin-banner{background:var(--green);color:#fff;border-radius:13px;padding:20px 24px;margin-bottom:17px;display:flex;align-items:center;justify-content:space-between}.margin-banner-left .label{font:10px 'DM Mono',monospace;letter-spacing:1px;color:#c2dfc7;margin-bottom:6px}.margin-banner-left .val{font:700 28px Manrope,sans-serif;letter-spacing:-1px}.margin-banner-left .sub{font-size:10px;color:#cce0d0;margin-top:4px}.margin-banner-right{text-align:right;font-size:10px;color:#cce0d0;line-height:1.7}
+.lang-toggle{display:flex;gap:6px;margin-bottom:14px}.lang-btn{border:1px solid var(--line);background:#fff;border-radius:7px;padding:6px 10px;font-size:10px;color:#49544b;cursor:pointer}.lang-btn.active{background:var(--green);color:#fff;border-color:var(--green)}
+.reminder-card{background:#f8f9f6;border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px}.reminder-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}.reminder-msg{font-size:10px;color:#3a4a3e;line-height:1.6;background:#fff;border-radius:7px;padding:9px 11px;border:1px solid var(--line)}
+.cust-row{display:flex;align-items:center;padding:11px 18px;border-top:1px solid #f2f3ef;gap:10px}.cust-avatar{height:33px;width:33px;border-radius:50%;display:grid;place-items:center;background:#f0e8dc;color:#876e4f;font-size:10px;font-weight:700;flex:none}.cust-info{flex:1}.cust-info b{font-size:10px;display:block}.cust-info small{font-size:9px;color:var(--muted)}.cust-right{text-align:right}.cust-bal{font:600 11px 'DM Mono',monospace}.cust-days{font-size:9px;color:var(--red);margin-top:2px}
+@media(max-width:1000px){.app{grid-template-columns:205px 1fr}main{padding:25px}.metrics{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.right-stack{grid-template-columns:1fr 1fr}.cf-grid{grid-template-columns:1fr}.insight-grid{grid-template-columns:1fr}.sup-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.app{grid-template-columns:1fr}aside{height:auto;position:static;padding:12px 15px;border-right:0;border-bottom:1px solid var(--line)}.brand{padding:0 3px 12px}.shop-switch,.nav-label,.side-bottom{display:none}.nav{display:flex;overflow-x:auto;gap:4px}.nav button{white-space:nowrap;padding:8px 10px}main{padding:20px 15px 35px}.metrics{gap:9px}.decision-inner{grid-template-columns:1fr}.decision-right{border-left:0;border-top:1px solid #ffffff25;padding:15px 0 0}.cf-grid{grid-template-columns:1fr}.insight-grid{grid-template-columns:1fr}.sup-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand">
+      <div class="brand-mark"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17.5 9 12l3 3 8-9"/><path d="M15 6h5v5"/></svg></div>
+      <div class="brand-name">dukaan<span>flow</span></div>
+    </div>
+    <div class="shop-switch"><div class="shop-icon">&#127978;</div><div class="shop-copy"><b>Sri Lakshmi Stores</b><small>Bengaluru &middot; Kirana</small></div><span style="color:#9aa39b;font-size:11px">&#8964;</span></div>
+    <div class="nav-label">WORKSPACE</div>
+    <nav class="nav" aria-label="Main navigation">
+      <button class="active" data-view="overview"><span class="nav-icon">&#9638;</span>Overview</button>
+      <button data-view="cashflow"><span class="nav-icon">&#8599;</span>Cash flow</button>
+      <button data-view="inventory"><span class="nav-icon">&#9636;</span>Inventory <span class="nav-badge">12</span></button>
+      <button data-view="customers"><span class="nav-icon">&#9817;</span>Customers <span class="nav-badge">8</span></button>
+      <button data-view="suppliers"><span class="nav-icon">&#8644;</span>Suppliers <span class="nav-badge">5</span></button>
+      <button data-view="insights"><span class="nav-icon">&#10035;</span>AI Insights</button>
+    </nav>
+    <div class="side-bottom">
+      <div class="sync"><span class="pulse"></span><small>All your data is up to date</small></div>
+      <div class="profile"><div class="avatar">RK</div><div><b>Ravi Kumar</b><small>Shop owner</small></div><span style="margin-left:auto;color:#929b94">&#183;&#183;&#183;</span></div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="topbar">
+      <div class="crumb">Your shop <span style="padding:0 7px;color:#b2bab2">/</span> <b id="crumb">Overview</b></div>
+      <div class="top-actions"><span class="today" id="todayLabel"></span><button class="icon-btn" aria-label="Notifications" id="notify">&#9831;<i class="notify-dot"></i></button></div>
+    </div>
+
+    <!-- OVERVIEW VIEW -->
+    <div class="view active" id="view-overview">
+      <header class="page-head">
+        <div><div class="eyebrow">YOUR DAILY BRIEFING</div><h1 id="greeting">Good morning, Ravi &#9728;&#65039;</h1><p>Here&#8217;s what&#8217;s happening at Sri Lakshmi Stores today.</p></div>
+        <button class="period">Last 30 days&nbsp;&#8964;</button>
+      </header>
+      <section class="metrics" aria-label="Shop metrics">
+        <article class="metric"><div class="metric-top">Sales this month <span class="metric-symbol">&#8599;</span></div><div class="metric-value" id="salesValue">&#8377;3,80,420</div><div class="metric-foot"><span class="up" id="salesChange">&#8593; 8.4%</span> vs. last month</div></article>
+        <article class="metric"><div class="metric-top">Cash available <span class="metric-symbol">&#8377;</span></div><div class="metric-value" id="cashValue">&#8377;42,500</div><div class="metric-foot">Across UPI, bank &amp; cash</div></article>
+        <article class="metric"><div class="metric-top">Customer credit <span class="metric-symbol">&#9817;</span></div><div class="metric-value" id="receivablesValue">&#8377;11,500</div><div class="metric-foot"><span class="warn" id="overdueCount">5 overdue</span> &middot; 8 customers</div></article>
+        <article class="metric"><div class="metric-top">Supplier dues <span class="metric-symbol">&#9711;</span></div><div class="metric-value" id="supplierDuesValue">&#8377;18,000</div><div class="metric-foot">Next payment due in <span class="warn">3 days</span></div></article>
+      </section>
+      <section class="decision" aria-label="DukaanFlow AI">
+        <div class="decision-inner">
+          <div>
+            <div class="decision-kicker"><span class="spark">&#10035;</span> CASHFLOW AGENT</div>
+            <h2>How much can you safely spend today?</h2>
+            <p>You have <span id="briefCash">&#8377;42,500</span> in cash. After reserving for supplier dues, expenses, and your operating buffer, here&#8217;s what&#8217;s free to deploy.</p>
+            <form class="ask" id="askForm">
+              <input id="askInput" aria-label="Ask your business" placeholder="e.g. Can I buy &#8377;20,000 of stock?"/>
+              <button id="askButton" type="submit">Ask &nbsp;&#8599;</button>
+            </form>
+            <div class="ask-response" id="askResponse" aria-live="polite"></div>
+          </div>
+          <div class="decision-right">
+            <div class="spend-label">SAFE TO SPEND TODAY</div>
+            <div class="spend-amount" id="safeToSpend">&#8377;6,500</div>
+            <div class="spend-meta"><span id="committedCash">&#8377;36,000</span> committed or kept aside</div>
+            <div class="spend-track"><span id="spendBar" style="width:15%"></span></div>
+            <div class="breakdown"><span>Cash <b id="breakdownCash">&#8377;42,500</b></span><span>Set aside <b id="breakdownSetAside">&#8377;36,000</b></span><span>Free <b id="breakdownFree">&#8377;6,500</b></span></div>
+            <div class="decision-note">Based on supplier dues, upcoming expenses, and your operating buffer. <button id="whyBtn">See how we calculated this</button></div>
+          </div>
+        </div>
+      </section>
+      <div class="grid">
+        <section class="panel">
+          <div class="panel-head"><div><div class="panel-title">Stock to act on</div><div class="panel-sub">Products needing attention today</div></div><button class="text-btn" id="allStock">View all inventory &nbsp;&#8599;</button></div>
+          <div class="table-wrap"><table class="table"><thead><tr><th>Product</th><th>In stock</th><th>Daily sales</th><th>Days cover</th><th>Status</th><th></th></tr></thead><tbody id="productRows"></tbody></table></div>
+        </section>
+        <div class="right-stack">
+          <section class="panel dues">
+            <div class="panel-head"><div><div class="panel-title">Collect from customers</div><div class="panel-sub" id="reminderSummary">Loading...</div></div><button class="text-btn" id="remindAll">Remind all &nbsp;&#8599;</button></div>
+            <div id="customerRows"></div>
+          </section>
+          <section class="panel" style="padding-bottom:7px">
+            <div class="panel-head"><div><div class="panel-title">Worth a look</div><div class="panel-sub">Signals from your data</div></div><span style="color:var(--green);font-size:15px">&#10035;</span></div>
+            <div id="activityItems"></div>
+          </section>
+        </div>
+      </div>
+      <div class="footer-note"><span>&#10035;</span> DukaanFlow recommendations use your shop data. Verify before acting.</div>
+    </div>
+
+    <!-- CASH FLOW VIEW -->
+    <div class="view" id="view-cashflow">
+      <header class="page-head">
+        <div><div class="eyebrow">CASHFLOW AGENT</div><h1>Cash flow</h1><p>Where your money came from and where it went this month.</p></div>
+      </header>
+      <section class="metrics">
+        <article class="metric"><div class="metric-top">Total income <span class="metric-symbol">&#8599;</span></div><div class="metric-value" id="cf-totalIncome">-</div><div class="metric-foot">UPI + cash + collections</div></article>
+        <article class="metric"><div class="metric-top">Cash available <span class="metric-symbol">&#8377;</span></div><div class="metric-value" id="cf-cash">-</div><div class="metric-foot">Current balance</div></article>
+        <article class="metric"><div class="metric-top">Safe to spend <span class="metric-symbol">&#10003;</span></div><div class="metric-value up" id="cf-safe">-</div><div class="metric-foot">After all commitments</div></article>
+        <article class="metric"><div class="metric-top">Receivables <span class="metric-symbol">&#9711;</span></div><div class="metric-value warn" id="cf-recv">-</div><div class="metric-foot">Pending from customers</div></article>
+      </section>
+      <div class="cf-grid">
+        <section class="panel">
+          <div class="panel-head"><div class="panel-title">Weekly income vs expenses</div></div>
+          <div class="bar-chart" id="cfBarChart"></div>
+          <div style="display:flex;gap:14px;padding:0 18px 14px;font-size:9px;color:var(--muted)"><span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:var(--green);display:inline-block"></span>Income</span><span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;border-radius:2px;background:#f0c9a0;display:inline-block"></span>Expenses</span></div>
+        </section>
+        <section class="panel">
+          <div class="panel-head"><div class="panel-title">Income breakdown</div></div>
+          <div class="cf-breakdown" id="cfIncomeBreakdown"></div>
+        </section>
+      </div>
+      <div class="cf-grid">
+        <section class="panel">
+          <div class="panel-head"><div class="panel-title">Expense breakdown</div></div>
+          <div class="cf-breakdown" id="cfExpenseBreakdown"></div>
+        </section>
+        <section class="panel">
+          <div class="panel-head"><div class="panel-title">Cash position</div></div>
+          <div class="cf-breakdown" id="cfPosition"></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- INVENTORY VIEW -->
+    <div class="view" id="view-inventory">
+      <header class="page-head">
+        <div><div class="eyebrow">INVENTORY AGENT</div><h1>Inventory</h1><p>Stock levels, sales velocity, and reorder recommendations.</p></div>
+      </header>
+      <section class="metrics">
+        <article class="metric"><div class="metric-top">Total products <span class="metric-symbol">&#9636;</span></div><div class="metric-value" id="inv-total">12</div><div class="metric-foot">Across all categories</div></article>
+        <article class="metric"><div class="metric-top">Reorder now <span class="metric-symbol">&#9888;</span></div><div class="metric-value warn" id="inv-reorder">-</div><div class="metric-foot">Running low on stock</div></article>
+        <article class="metric"><div class="metric-top">Slow moving <span class="metric-symbol">&#9711;</span></div><div class="metric-value" id="inv-slow">-</div><div class="metric-foot">Hold off restocking</div></article>
+        <article class="metric"><div class="metric-top">Reorder cost <span class="metric-symbol">&#8377;</span></div><div class="metric-value" id="inv-cost">-</div><div class="metric-foot">To cover all reorders</div></article>
+      </section>
+      <section class="panel" style="margin-bottom:17px">
+        <div class="panel-head"><div><div class="panel-title">All products</div><div class="panel-sub">Sorted by urgency</div></div></div>
+        <div class="table-wrap"><table class="table"><thead><tr><th>Product</th><th>Category</th><th>In stock</th><th>Daily sales</th><th>Days cover</th><th>Margin</th><th>Status</th><th>Action</th></tr></thead><tbody id="invRows"></tbody></table></div>
+      </section>
+    </div>
+
+    <!-- CUSTOMERS VIEW -->
+    <div class="view" id="view-customers">
+      <header class="page-head">
+        <div><div class="eyebrow">COLLECTION AGENT</div><h1>Customers</h1><p>Outstanding balances and reminder drafts.</p></div>
+      </header>
+      <section class="metrics">
+        <article class="metric"><div class="metric-top">Total customers <span class="metric-symbol">&#9817;</span></div><div class="metric-value">8</div><div class="metric-foot">Active credit accounts</div></article>
+        <article class="metric"><div class="metric-top">Total outstanding <span class="metric-symbol">&#8377;</span></div><div class="metric-value warn" id="cust-total">-</div><div class="metric-foot">Across all customers</div></article>
+        <article class="metric"><div class="metric-top">Overdue <span class="metric-symbol">&#9711;</span></div><div class="metric-value" id="cust-overdue">-</div><div class="metric-foot">Past usual pay window</div></article>
+        <article class="metric"><div class="metric-top">Avg overdue days <span class="metric-symbol">&#9711;</span></div><div class="metric-value" id="cust-avgdays">-</div><div class="metric-foot">Days past due date</div></article>
+      </section>
+      <div class="grid">
+        <section class="panel">
+          <div class="panel-head"><div><div class="panel-title">All customers</div><div class="panel-sub">Sorted by overdue days</div></div></div>
+          <div id="custFullList"></div>
+        </section>
+        <div class="right-stack">
+          <section class="panel" style="padding:18px">
+            <div class="panel-title" style="margin-bottom:4px">Send reminders</div>
+            <div class="panel-sub" style="margin-bottom:14px">Generate WhatsApp-ready messages in the customer&#8217;s preferred language.</div>
+            <div class="lang-toggle">
+              <button class="lang-btn active" data-lang="auto">Auto (per customer)</button>
+              <button class="lang-btn" data-lang="en">English</button>
+              <button class="lang-btn" data-lang="hi">&#2361;&#2367;&#2306;&#2342;&#2368;</button>
+              <button class="lang-btn" data-lang="kn">&#3221;&#3240;&#3277;&#3240;&#3233;</button>
+            </div>
+            <button class="buy" style="width:100%;padding:10px;font-size:11px;margin-bottom:14px" id="genReminders">Generate reminder drafts &nbsp;&#8599;</button>
+            <div id="reminderDrafts"></div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUPPLIERS VIEW -->
+    <div class="view" id="view-suppliers">
+      <header class="page-head">
+        <div><div class="eyebrow">MARGIN LEAK AGENT</div><h1>Suppliers</h1><p>Supplier dues, price comparisons, and margin leak analysis.</p></div>
+      </header>
+      <div class="margin-banner" id="marginBanner">
+        <div class="margin-banner-left"><div class="label">POTENTIAL MONTHLY SAVING</div><div class="val" id="marginTotal">-</div><div class="sub" id="marginSub">Across 8 products &middot; switch suppliers to unlock</div></div>
+        <div class="margin-banner-right" id="marginBannerRight">Loading...</div>
+      </div>
+      <div class="sup-grid" id="supCards"></div>
+      <section class="panel">
+        <div class="panel-head"><div><div class="panel-title">Price comparison &mdash; where you can save</div><div class="panel-sub" id="marginLeakSub">Loading...</div></div></div>
+        <div class="table-wrap"><table class="table"><thead><tr><th>Product</th><th>Current supplier</th><th>Current price</th><th>Better supplier</th><th>Better price</th><th>Monthly units</th><th>Monthly saving</th></tr></thead><tbody id="marginRows"></tbody></table></div>
+      </section>
+    </div>
+
+    <!-- AI INSIGHTS VIEW -->
+    <div class="view" id="view-insights">
+      <header class="page-head">
+        <div><div class="eyebrow">ALL 5 AGENTS</div><h1>AI Insights</h1><p>Your full business intelligence summary, powered by DukaanFlow.</p></div>
+      </header>
+      <div class="planner-card" id="plannerCard">
+        <div class="planner-kicker">&#10035; DECISION / PLANNER AGENT</div>
+        <div class="planner-title">Today&#8217;s recommended actions</div>
+        <div class="planner-rec" id="plannerRec">Loading...</div>
+        <div class="planner-actions" id="plannerActions"></div>
+      </div>
+      <div class="insight-grid" id="insightGrid"></div>
+    </div>
+
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<!-- Safe-to-spend modal -->
+<div class="modal-back" id="modalBack" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <h3 id="modalTitle">How we calculated safe to spend</h3>
+    <p>We reserve cash for known commitments first. Customer payments stay out until collected.</p>
+    <div class="modal-total"><span>Cash on hand</span><b id="modalCash">-</b></div>
+    <div class="modal-total"><span>Supplier dues</span><b id="modalSupplierDues">-</b></div>
+    <div class="modal-total"><span>Upcoming expenses</span><b id="modalExpenses">-</b></div>
+    <div class="modal-total"><span>Operating buffer</span><b id="modalBuffer">-</b></div>
+    <div class="modal-total" style="color:var(--green);font-weight:700"><span>Safe to spend</span><b id="modalSafe">-</b></div>
+    <p id="modalRecv"></p>
+    <div class="modal-actions"><button id="closeModal">Got it</button><button class="primary" id="collectModal">Review collections</button></div>
+  </div>
+</div>
+<script>
+const $ = id => document.getElementById(id);
+const money = v => new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(v);
+const esc = v => String(v).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+// Toast
+const toast = $('toast'); let toastTimer;
+function showToast(msg){ toast.textContent=msg; toast.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>toast.classList.remove('show'),3000); }
+
+// API
+async function api(path, opts={}){
+  const r = await fetch(path,{...opts,headers:{'Content-Type':'application/json',...(opts.headers||{})}});
+  const d = await r.json();
+  if(!r.ok) throw new Error(d.error||'Request failed');
+  return d;
+}
+
+// Today label
+const now = new Date();
+$('todayLabel').textContent = now.toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'short',year:'numeric'}).toUpperCase();
+const hr = now.getHours();
+if($('greeting')) $('greeting').innerHTML = (hr<12?'Good morning':hr<17?'Good afternoon':'Good evening')+', Ravi &#9728;&#65039;';
+
+// Nav routing
+let currentView = 'overview';
+const viewLoaders = {};
+document.querySelectorAll('.nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const v = btn.dataset.view;
+    document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+    $('view-'+v).classList.add('active');
+    $('crumb').textContent = btn.textContent.trim().replace(/\d+$/,'').trim();
+    currentView = v;
+    if(viewLoaders[v]) viewLoaders[v]();
+  });
+});
+
+// ── OVERVIEW ──────────────────────────────────────────────
+let latestDash = null;
+
+function renderOverview(d){
+  latestDash = d;
+  const m = d.merchant;
+  $('salesValue').textContent = money(m.monthlySales);
+  $('salesChange').textContent = '\u2191 '+m.salesChangePercent+'%';
+  $('cashValue').textContent = money(m.cashAvailable);
+  $('receivablesValue').textContent = money(m.customerReceivables);
+  $('supplierDuesValue').textContent = money(m.supplierDues);
+  $('overdueCount').textContent = d.reminderCount+' overdue';
+  $('briefCash').textContent = money(m.cashAvailable);
+  $('safeToSpend').textContent = money(d.safeToSpend);
+  $('committedCash').textContent = money(d.committedCash);
+  $('breakdownCash').textContent = money(m.cashAvailable);
+  $('breakdownSetAside').textContent = money(d.committedCash);
+  $('breakdownFree').textContent = money(d.safeToSpend);
+  $('spendBar').style.width = (m.cashAvailable ? Math.min(100,d.safeToSpend/m.cashAvailable*100) : 0)+'%';
+  $('reminderSummary').textContent = d.reminderCount+' reminders suggested \u00b7 '+money(d.reminderTarget)+' targeted';
+  $('modalCash').textContent = money(m.cashAvailable);
+  $('modalSupplierDues').textContent = '\u2212 '+money(m.supplierDues);
+  $('modalExpenses').textContent = '\u2212 '+money(m.upcomingExpenses);
+  $('modalBuffer').textContent = '\u2212 '+money(m.operatingBuffer);
+  $('modalSafe').textContent = money(d.safeToSpend);
+  $('modalRecv').textContent = money(m.customerReceivables)+' in customer credit is outstanding. If collected, safe-to-spend increases.';
+  renderProductRows(d.products);
+  renderCustomerRows(d.customers);
+  renderActivity(d);
+}
+
+function renderProductRows(products){
+  const labels={reorder:'Reorder today',slow:'Slow moving',healthy:'Healthy'};
+  $('productRows').innerHTML = products.map(p=>{
+    const sc = p.status==='reorder'?'low':p.status==='slow'?'slow-c':'';
+    const days = p.dailySales>0?(p.stock/p.dailySales).toFixed(1):'-';
+    const action = p.suggestedOrderQty>0?'Order':p.status==='slow'?'Hold':'View';
+    return `<tr>
+      <td><div class="product"><div class="prod-icon">${esc(p.emoji)}</div><div><div class="prod-name">${esc(p.name)}</div><div class="prod-cat">${esc(p.category)}</div></div></div></td>
+      <td class="stock-val ${sc}">${p.stock} units</td>
+      <td>${p.dailySales}/day</td>
+      <td>${days} days</td>
+      <td><span class="badge ${p.status==='slow'?'slowb':p.status}">${labels[p.status]||'Review'}</span></td>
+      <td><button class="buy" data-pid="${esc(p.id)}" data-action="${action}">${action}</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderCustomerRows(customers){
+  $('customerRows').innerHTML = customers.map(c=>`
+    <div class="due-row">
+      <div class="due-avatar">${esc(c.initials)}</div>
+      <div class="due-info"><b>${esc(c.name)}</b><small>${c.daysOverdue} days overdue &middot; usually pays in ${c.usualPayDays} days</small></div>
+      <div class="due-amount">${money(c.balance)}<small>Reminder ready</small></div>
+    </div>`).join('');
+}
+
+function renderActivity(d){
+  const saving = d.totalMonthlySaving||0;
+  const reorder = (d.products||[]).filter(p=>p.status==='reorder');
+  let html = '';
+  if(saving>0) html+=`<div class="activity-item"><div class="activity-icon">&#8644;</div><div class="activity-copy"><b>Supplier price opportunity</b><br/>Switch suppliers on key products to save ${money(saving)}/month.<small>Margin Leak Agent &middot; ${d.products.filter(p=>p.status!=='healthy').length} products flagged</small></div></div>`;
+  if(reorder.length>0) html+=`<div class="activity-item"><div class="activity-icon" style="background:#fff3e8;color:#c4874e">&#9888;</div><div class="activity-copy"><b>${reorder.length} products need reordering</b><br/>${reorder.map(p=>p.name).join(', ')}.<small>Inventory Agent &middot; Based on daily sales velocity</small></div></div>`;
+  html+=`<div class="activity-item"><div class="activity-icon" style="background:#fff3e8;color:#c4874e">&#9711;</div><div class="activity-copy"><b>Supplier payment coming up</b><br/>Pay ${money(d.merchant.supplierDues)} to Kaveri Distributors by Sunday.<small>Due in 3 days &middot; Based on your recorded bill</small></div></div>`;
+  $('activityItems').innerHTML = html;
+}
+
+async function loadOverview(){
+  try{ renderOverview(await api('/api/dashboard')); }
+  catch(e){ showToast('Could not load dashboard. Run: npm start'); }
+}
+viewLoaders['overview'] = loadOverview;
+
+// Product row click
+$('productRows').addEventListener('click', async e=>{
+  const btn = e.target.closest('[data-pid]'); if(!btn) return;
+  const action = btn.dataset.action;
+  if(action==='Hold'){ showToast('Slow-moving product kept off reorder list.'); return; }
+  if(action==='View'){ showToast('Full product details available in Inventory view.'); return; }
+  btn.disabled=true;
+  try{
+    const r = await api('/api/orders',{method:'POST',body:JSON.stringify({productId:btn.dataset.pid})});
+    showToast(r.order.quantity+' units added to draft order \u00b7 '+money(r.order.total));
+    renderOverview(r.dashboard);
+  }catch(e){ showToast(e.message); btn.disabled=false; }
+});
+
+// Ask form
+$('askForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const inp=$('askInput'), resp=$('askResponse'), btn=$('askButton');
+  const q=inp.value.trim(); if(!q){inp.focus();return;}
+  btn.disabled=true; btn.textContent='Thinking\u2026';
+  try{
+    const r=await api('/api/ask',{method:'POST',body:JSON.stringify({question:q})});
+    resp.textContent=r.answer; resp.classList.add('show');
+  }catch(e){ resp.textContent=e.message; resp.classList.add('show'); }
+  finally{ btn.disabled=false; btn.innerHTML='Ask &nbsp;&#8599;'; inp.value=''; }
+});
+
+// Why modal
+$('whyBtn').addEventListener('click',()=>$('modalBack').classList.add('open'));
+$('closeModal').addEventListener('click',()=>$('modalBack').classList.remove('open'));
+$('modalBack').addEventListener('click',e=>{ if(e.target.id==='modalBack') $('modalBack').classList.remove('open'); });
+$('collectModal').addEventListener('click',()=>{ $('modalBack').classList.remove('open'); document.querySelector('[data-view="customers"]').click(); });
+$('allStock').addEventListener('click',()=>document.querySelector('[data-view="inventory"]').click());
+$('notify').addEventListener('click',()=>showToast('You\u2019re all caught up.'));
+
+// Remind all (overview)
+$('remindAll').addEventListener('click', async()=>{
+  try{
+    const r=await api('/api/reminders/draft',{method:'POST',body:JSON.stringify({lang:'auto'})});
+    showToast(r.count+' reminders drafted for '+money(r.total)+'. Review in Customers view.');
+  }catch(e){ showToast(e.message); }
+});
+
+// ── CASH FLOW ─────────────────────────────────────────────
+async function loadCashflow(){
+  try{
+    const d = await api('/api/cashflow');
+    $('cf-totalIncome').textContent = money(d.totalIncome);
+    $('cf-cash').textContent = money(d.cashAvailable);
+    $('cf-safe').textContent = money(d.safeToSpend);
+    $('cf-recv').textContent = money(d.customerReceivables);
+
+    // Bar chart
+    const maxVal = Math.max(...d.timeline.map(w=>Math.max(w.income,w.expenses)));
+    $('cfBarChart').innerHTML = '<div class="bar-chart-title">Weekly income vs expenses (\u20b9)</div>' +
+      d.timeline.map(w=>{
+        const iw = Math.round(w.income/maxVal*120);
+        const ew = Math.round(w.expenses/maxVal*120);
+        return `<div class="bar-row">
+          <div class="bar-row-label">${esc(w.week)}</div>
+          <div class="bar-group">
+            <div class="bar-seg income" style="width:${iw}px"></div>
+            <div class="bar-seg expense" style="width:${ew}px"></div>
+          </div>
+          <div class="bar-row-val">${money(w.income)} / ${money(w.expenses)}</div>
+        </div>`;
+      }).join('');
+
+    // Income breakdown
+    $('cfIncomeBreakdown').innerHTML = [
+      {label:'UPI income',val:d.upiIncome,cls:'green'},
+      {label:'Cash income',val:d.cashIncome,cls:''},
+      {label:'Credit collected',val:d.creditCollected,cls:'green'},
+      {label:'Total income',val:d.totalIncome,cls:'green'}
+    ].map(i=>`<div class="cf-item"><div class="cf-item-label">${i.label}</div><div class="cf-item-val ${i.cls}">${money(i.val)}</div></div>`).join('');
+
+    const eb = d.expenseBreakdown;
+    const totalExp = eb.rent+eb.staff+eb.utilities+eb.misc+d.draftOrdersTotal;
+    $('cfExpenseBreakdown').innerHTML = [
+      {label:'Rent',val:eb.rent},{label:'Staff',val:eb.staff},
+      {label:'Utilities',val:eb.utilities},{label:'Miscellaneous',val:eb.misc},
+      {label:'Draft orders',val:d.draftOrdersTotal},{label:'Total expenses',val:totalExp}
+    ].map(i=>`<div class="cf-item"><div class="cf-item-label">${i.label}</div><div class="cf-item-val ${i.val===totalExp?'red':''}">${money(i.val)}</div></div>`).join('');
+
+    $('cfPosition').innerHTML = [
+      {label:'Cash available',val:d.cashAvailable,cls:''},
+      {label:'Supplier dues',val:d.supplierDues,cls:'red'},
+      {label:'Upcoming expenses',val:d.upcomingExpenses,cls:'red'},
+      {label:'Operating buffer',val:d.operatingBuffer,cls:''},
+      {label:'Safe to spend',val:d.safeToSpend,cls:'green'},
+      {label:'Receivables (pending)',val:d.customerReceivables,cls:''}
+    ].map(i=>`<div class="cf-item"><div class="cf-item-label">${i.label}</div><div class="cf-item-val ${i.cls}">${money(i.val)}</div></div>`).join('');
+  }catch(e){ showToast('Could not load cashflow data.'); }
+}
+viewLoaders['cashflow'] = loadCashflow;
+
+// ── INVENTORY ─────────────────────────────────────────────
+async function loadInventory(){
+  try{
+    const products = await api('/api/products');
+    const reorder = products.filter(p=>p.status==='reorder');
+    const slow = products.filter(p=>p.status==='slow');
+    const reorderCost = reorder.reduce((s,p)=>s+p.suggestedOrderQty*p.unitCost,0);
+    $('inv-reorder').textContent = reorder.length;
+    $('inv-slow').textContent = slow.length;
+    $('inv-cost').textContent = money(reorderCost);
+    const sorted = [...products].sort((a,b)=>{
+      const rank={reorder:0,slow:1,healthy:2};
+      return (rank[a.status]||2)-(rank[b.status]||2);
+    });
+    $('invRows').innerHTML = sorted.map(p=>{
+      const days = p.dailySales>0?(p.stock/p.dailySales).toFixed(1):'-';
+      const margin = p.sellingPrice>0?Math.round((p.sellingPrice-p.unitCost)/p.sellingPrice*100)+'%':'-';
+      const sc = p.status==='reorder'?'low':p.status==='slow'?'slow-c':'';
+      const action = p.suggestedOrderQty>0?`<button class="buy" data-pid="${esc(p.id)}" data-action="Order">Order ${p.suggestedOrderQty}</button>`:p.status==='slow'?'<span style="color:#b67a3b;font-size:9px">Hold</span>':'<span style="color:var(--green);font-size:9px">&#10003; OK</span>';
+      return `<tr>
+        <td><div class="product"><div class="prod-icon">${esc(p.emoji)}</div><div><div class="prod-name">${esc(p.name)}</div><div class="prod-cat">${esc(p.supplier)}</div></div></div></td>
+        <td>${esc(p.category)}</td>
+        <td class="stock-val ${sc}">${p.stock}</td>
+        <td>${p.dailySales}/day</td>
+        <td>${days}</td>
+        <td>${margin}</td>
+        <td><span class="badge ${p.status==='slow'?'slowb':p.status}">${p.status==='reorder'?'Reorder':p.status==='slow'?'Slow':'Healthy'}</span></td>
+        <td>${action}</td>
+      </tr>`;
+    }).join('');
+
+    $('invRows').addEventListener('click', async e=>{
+      const btn=e.target.closest('[data-pid]'); if(!btn||btn.dataset.action!=='Order') return;
+      btn.disabled=true;
+      try{
+        const r=await api('/api/orders',{method:'POST',body:JSON.stringify({productId:btn.dataset.pid})});
+        showToast(r.order.quantity+' units ordered \u00b7 '+money(r.order.total));
+        loadInventory();
+      }catch(e){ showToast(e.message); btn.disabled=false; }
+    });
+  }catch(e){ showToast('Could not load inventory.'); }
+}
+viewLoaders['inventory'] = loadInventory;
+
+// ── CUSTOMERS ─────────────────────────────────────────────
+let selectedLang = 'auto';
+document.querySelectorAll('.lang-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedLang = btn.dataset.lang;
+  });
+});
+
+async function loadCustomers(){
+  try{
+    const customers = await api('/api/customers');
+    const total = customers.reduce((s,c)=>s+c.balance,0);
+    const overdue = customers.filter(c=>c.daysOverdue>c.usualPayDays);
+    const avgDays = overdue.length ? Math.round(overdue.reduce((s,c)=>s+(c.daysOverdue-c.usualPayDays),0)/overdue.length) : 0;
+    $('cust-total').textContent = money(total);
+    $('cust-overdue').textContent = overdue.length;
+    $('cust-avgdays').textContent = avgDays+' days';
+    const sorted = [...customers].sort((a,b)=>(b.daysOverdue-b.usualPayDays)-(a.daysOverdue-a.usualPayDays));
+    $('custFullList').innerHTML = sorted.map(c=>{
+      const late = c.daysOverdue-c.usualPayDays;
+      const langLabel = {en:'EN',hi:'HI',kn:'KN'}[c.language]||'EN';
+      return `<div class="cust-row">
+        <div class="cust-avatar">${esc(c.initials)}</div>
+        <div class="cust-info">
+          <b>${esc(c.name)} <span style="font-size:8px;background:#f0f5f1;color:var(--green);border-radius:4px;padding:1px 5px;font-weight:600">${langLabel}</span></b>
+          <small>${c.daysOverdue} days overdue &middot; usually pays in ${c.usualPayDays} days &middot; total purchases ${money(c.totalPurchases)}</small>
+        </div>
+        <div class="cust-right">
+          <div class="cust-bal">${money(c.balance)}</div>
+          ${late>0?`<div class="cust-days">${late} days late</div>`:'<div style="font-size:9px;color:var(--green)">On time</div>'}
+        </div>
+      </div>`;
+    }).join('');
+  }catch(e){ showToast('Could not load customers.'); }
+}
+viewLoaders['customers'] = loadCustomers;
+
+$('genReminders').addEventListener('click', async()=>{
+  $('genReminders').disabled=true; $('genReminders').textContent='Generating\u2026';
+  try{
+    const r=await api('/api/reminders/draft',{method:'POST',body:JSON.stringify({lang:selectedLang})});
+    $('reminderDrafts').innerHTML = r.reminders.map(rem=>`
+      <div class="reminder-card">
+        <div class="reminder-header">
+          <div class="due-avatar">${esc(rem.customerName.split(' ').map(w=>w[0]).join('').slice(0,2))}</div>
+          <div><b style="font-size:10px">${esc(rem.customerName)}</b><div style="font-size:9px;color:var(--muted)">${money(rem.amount)} outstanding &middot; ${rem.language.toUpperCase()}</div></div>
+        </div>
+        <div class="reminder-msg">${esc(rem.message)}</div>
+      </div>`).join('');
+    showToast(r.count+' reminders drafted for '+money(r.total));
+  }catch(e){ showToast(e.message); }
+  finally{ $('genReminders').disabled=false; $('genReminders').innerHTML='Generate reminder drafts &nbsp;&#8599;'; }
+});
+
+// ── SUPPLIERS ─────────────────────────────────────────────
+async function loadSuppliers(){
+  try{
+    const [suppliers, margin] = await Promise.all([api('/api/suppliers'), api('/api/margin')]);
+    $('marginTotal').textContent = money(margin.totalMonthlySaving);
+    $('marginSub').textContent = 'Across '+margin.leakCount+' products \u00b7 switch suppliers to unlock';
+    $('marginBannerRight').innerHTML = 'Top saving: '+esc(margin.leaks[0].productName)+'<br/>'+money(margin.leaks[0].monthlySaving)+'/month<br/>'+esc(margin.leaks[0].currentSupplier)+' \u2192 '+esc(margin.leaks[0].betterSupplier);
+    $('marginLeakSub').textContent = margin.leakCount+' products where a cheaper supplier is available';
+
+    $('supCards').innerHTML = suppliers.map(s=>`
+      <div class="sup-card">
+        <div class="sup-name">${esc(s.name)}</div>
+        <div class="sup-meta">${esc(s.contact)}${s.phone?' &middot; '+esc(s.phone):''} &middot; &#11088; ${s.rating}</div>
+        <div class="sup-row"><span>Amount due</span><b class="${s.amountDue>0?'sup-due':'sup-ok'}">${s.amountDue>0?money(s.amountDue):'None'}</b></div>
+        ${s.dueDays!==null?`<div class="sup-row"><span>Due in</span><b class="${s.dueDays<=3?'sup-due':''}">${s.dueDays} days</b></div>`:''}
+        <div class="sup-row"><span>Avg delivery</span><b>${s.avgDeliveryDays===0?'Self-pickup':s.avgDeliveryDays+' day(s)'}</b></div>
+        <div class="sup-row"><span>Products</span><b>${s.products.length}</b></div>
+        <div style="font-size:9px;color:var(--muted);margin-top:8px;line-height:1.5">${esc(s.notes)}</div>
+      </div>`).join('');
+
+    $('marginRows').innerHTML = margin.leaks.map(l=>`
+      <tr>
+        <td><div class="product"><div class="prod-icon">${esc(l.emoji)}</div><div class="prod-name">${esc(l.productName)}</div></div></td>
+        <td>${esc(l.currentSupplier)}</td>
+        <td>${money(l.currentPrice)}</td>
+        <td style="color:var(--green)">${esc(l.betterSupplier)}</td>
+        <td style="color:var(--green);font-weight:600">${money(l.betterPrice)}</td>
+        <td>${l.monthlyUnits} units</td>
+        <td style="color:var(--green);font-weight:700">${money(l.monthlySaving)}</td>
+      </tr>`).join('');
+  }catch(e){ showToast('Could not load supplier data.'); }
+}
+viewLoaders['suppliers'] = loadSuppliers;
+
+// ── AI INSIGHTS ───────────────────────────────────────────
+async function loadInsights(){
+  try{
+    const d = await api('/api/insights');
+    $('plannerRec').textContent = d.plannerAgent.recommendation;
+    $('plannerActions').innerHTML = d.plannerAgent.actions.map(a=>`<div class="planner-action">${esc(a)}</div>`).join('');
+
+    const agents = [
+      { key:'cashAgent', icon:'&#8377;', color:'#e8f3eb', title:'Cash Flow Agent', sub:'Safe-to-spend calculator',
+        stats:[['Cash available',money(d.cashAgent.cashAvailable)],['Safe to spend',money(d.cashAgent.safeToSpend)],['Supplier dues',money(d.cashAgent.supplierDues)],['Receivables',money(d.cashAgent.customerReceivables)]] },
+      { key:'inventoryAgent', icon:'&#9636;', color:'#fff4e5', title:'Inventory Agent', sub:'Stock velocity & reorder',
+        stats:[['Reorder now',d.inventoryAgent.reorderCount+' products'],['Slow moving',d.inventoryAgent.slowCount+' products'],['Reorder items',d.inventoryAgent.reorderProducts.map(p=>p.name).join(', ')||'None']] },
+      { key:'marginAgent', icon:'&#8644;', color:'#e8f3eb', title:'Margin Leak Agent', sub:'Supplier price comparison',
+        stats:[['Monthly saving',money(d.marginAgent.totalMonthlySaving)],['Products flagged',d.marginAgent.leakCount],['Top opportunity',d.marginAgent.topLeak.productName]] },
+      { key:'collectionAgent', icon:'&#9817;', color:'#fff0e9', title:'Collection Agent', sub:'Customer payment tracking',
+        stats:[['Overdue customers',d.collectionAgent.overdueCount],['Total overdue',money(d.collectionAgent.totalOverdue)],['Worst overdue',d.collectionAgent.overdueCustomers[0]?d.collectionAgent.overdueCustomers[0].name+' ('+d.collectionAgent.overdueCustomers[0].daysOverdue+' days)':'None']] }
+    ];
+
+    $('insightGrid').innerHTML = agents.map(a=>`
+      <div class="agent-card">
+        <div class="agent-header">
+          <div class="agent-icon" style="background:${a.color}">${a.icon}</div>
+          <div><div class="agent-title">${a.title}</div><div class="agent-sub">${a.sub}</div></div>
+        </div>
+        <div class="agent-summary">${esc(d[a.key].summary)}</div>
+        ${a.stats.map(s=>`<div class="agent-stat"><span>${s[0]}</span><b>${esc(String(s[1]))}</b></div>`).join('')}
+      </div>`).join('');
+  }catch(e){ showToast('Could not load insights.'); }
+}
+viewLoaders['insights'] = loadInsights;
+
+// Boot
+loadOverview();
+</script>
+</body>
+</html>
